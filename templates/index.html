@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Chat</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #chat {
+            width: 100%;
+            max-width: 600px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        #header {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 1.5em;
+        }
+        #messages {
+            height: 300px;
+            overflow-y: scroll;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            padding: 10px;
+        }
+        #input, #username {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-top: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        #input:focus, #username:focus {
+            outline: none;
+            border-top: 1px solid #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat">
+        <div id="header">Chat Room</div>
+        <input type="text" id="username" placeholder="Enter your username" autocomplete="off">
+        <div id="messages"></div>
+        <input type="text" id="input" placeholder="Type your message here..." autocomplete="off">
+    </div>
+    <script>
+        const socket = io();
+
+        document.getElementById('input').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const username = document.getElementById('username').value || "Anonymous";
+                const msg = `${username}: ${e.target.value}`;
+                socket.send(msg);
+                e.target.value = '';
+            }
+        });
+
+        socket.on('message', function(msg) {
+            const messages = document.getElementById('messages');
+            const messageElement = document.createElement('div');
+            messageElement.textContent = msg;
+            messages.appendChild(messageElement);
+            messages.scrollTop = messages.scrollHeight;
+        });
+    </script>
+</body>
+</html>
