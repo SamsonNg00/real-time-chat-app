@@ -9,6 +9,11 @@ This is a real-time chat application built with Flask and Flask-SocketIO. Users 
 - **Enhanced UI**: A modern and clean interface for an optimal chat experience.
 - **Timestamps**: Each message is timestamped to track when it was sent.
 
+## Demo images
+Demo Image
+
+![demo-real-time-chat-app](https://github.com/user-attachments/assets/60e8825a-c6d7-4abf-b89c-aeb85b5ee48c)
+
 ## Technologies Used
 - **Backend**: Flask, Flask-SocketIO
 - **Frontend**: HTML, CSS, JavaScript
